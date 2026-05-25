@@ -11,12 +11,12 @@ from datetime import datetime
 try:
     import psutil
 except ImportError:
-    sys.exit("FREEZE_GUARD :: psutil not installed. run: pip install psutil")
+    sys.exit("psutil not installed")
 
 try:
     from pynput import mouse
 except ImportError:
-    sys.exit("FREEZE_GUARD :: pynput not installed. run: pip install pynput")
+    sys.exit("pynput not installed")
 
 
 class CFG:
@@ -400,15 +400,15 @@ def print_log_summary():
 
 def main():
     if sys.platform != "win32":
-        sys.exit("FREEZE_GUARD :: Windows only.")
+        sys.exit("Fuck off unix user")
 
     print("=" * 60)
-    print("SYSCLEAN :: FREEZE_GUARD  --  armed")
+    print("RAGE-O-CLOCK - ARMED! TIME TO RAAAAGEE!!!!!!!")
     print(f"  heartbeat : stall if gap > {CFG.HEARTBEAT_INTERVAL * CFG.STALL_FACTOR:.1f}s")
     print(f"  rage      : burst if >= {CFG.RAGE_THRESHOLD} clicks / {CFG.RAGE_WINDOW:.0f}s")
     print(f"  suspend   : {'ENABLED' if CFG.ENABLE_SUSPEND else 'disabled'}")
     print(f"  log       : {CFG.LOG_PATH}")
-    print("  ctrl-c to stop (auto-restores priorities on exit)")
+    print("  ctrl-c to stop ")
     print("=" * 60)
 
     _own_user()
@@ -429,19 +429,19 @@ def main():
             cooled       = (now - last_event) > CFG.EVENT_COOLDOWN
 
             if stall_recent and raging and cooled:
-                print(f"\n[gate] FRUSTRATION EVENT -- stall {heartbeat.last_stall_dur:.2f}s"
+                print(f"\n[gate] RAGE EVENT -- stall {heartbeat.last_stall_dur:.2f}s"
                       f" + rage {rage.rate()} clicks/{CFG.RAGE_WINDOW:.0f}s")
                 relief.run(heartbeat.last_stall_dur)
                 last_event = time.time()
                 print()
     except KeyboardInterrupt:
-        print("\nFREEZE_GUARD :: stopping...")
+        print("stopping...")
     finally:
         heartbeat.stop()
         rage.stop()
         relief.restore()
         print_log_summary()
-        print("FREEZE_GUARD :: disarmed.")
+        print("disarmed.")
 
 
 if __name__ == "__main__":
